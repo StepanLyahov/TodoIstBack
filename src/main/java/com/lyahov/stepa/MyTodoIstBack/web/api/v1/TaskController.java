@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.lyahov.stepa.MyTodoIstBack.web.Api.TASK;
+import static com.lyahov.stepa.MyTodoIstBack.web.ApiConstantUtil.TASK;
 
 @RestController
 @RequiredArgsConstructor
