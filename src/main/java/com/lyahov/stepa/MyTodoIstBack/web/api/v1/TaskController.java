@@ -18,18 +18,18 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping("/getTask/{id}")
-    public Task getTask(@PathVariable("id") Integer id) {
+    public Task getTask(@PathVariable("id") Long id) {
         return taskService.getTask(id);
     }
 
     @PostMapping("/createTask")
-    public Task createTask(@RequestBody Task task) {
-        return taskService.createTask(task);
+    public void createTask(@RequestBody Task task) {
+        taskService.createTask(task);
     }
 
     @PostMapping("/updateTask")
-    public Task updateTask(@RequestBody Task task) {
-        return taskService.updateTask(task);
+    public void updateTask(@RequestBody Task task) {
+        taskService.updateTask(task);
     }
 
     @GetMapping("/getAllTask")

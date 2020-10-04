@@ -6,11 +6,11 @@ import com.lyahov.stepa.MyTodoIstBack.web.dto.enums.StatusTask;
 import java.util.List;
 
 public interface TaskService {
-    Task getTask(Integer id);
+    Task getTask(Long id);
 
-    Task createTask(Task task);
+    void createTask(Task task);
 
-    Task updateTask(Task task);
+    void updateTask(Task task);
 
     List<Task> getAllTask(List<StatusTask> statuses);
 }
