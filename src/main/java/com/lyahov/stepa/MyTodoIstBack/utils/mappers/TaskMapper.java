@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface TaskMapper {
-
     Task toDto(TaskEntity entity);
     TaskEntity toEntity(Task dto);
 }

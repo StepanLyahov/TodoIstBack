@@ -1,5 +1,6 @@
 package com.lyahov.stepa.MyTodoIstBack.business.entity;
 
+import com.lyahov.stepa.MyTodoIstBack.web.dto.Project;
 import com.lyahov.stepa.MyTodoIstBack.web.dto.enums.StatusTask;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,4 +28,8 @@ public class TaskEntity {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     StatusTask status;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "project_id", referencedColumnName = "id")
+    ProjectEntity projectId;
 }
