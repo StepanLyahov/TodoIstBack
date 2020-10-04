@@ -11,7 +11,7 @@ import javax.persistence.Enumerated;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Task {
-    Integer id;
+    Long id;
     String title;
     String description;
 

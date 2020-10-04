@@ -25,6 +25,15 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
+    public void deleteTask(Long id) {
+        log.info("delete task by " + id);
+        if (null == id) {
+            log.info("task by" + id + " is not found");
+            taskRepository.deleteById(id);
+        }
+    }
+
+    @Override
     public Task getTask(Long id) {
         log.info("get task by " + id);
         TaskEntity entity = taskRepository.getOne(id);

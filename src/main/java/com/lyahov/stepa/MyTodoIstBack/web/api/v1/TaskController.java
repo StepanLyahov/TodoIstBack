@@ -22,6 +22,11 @@ public class TaskController {
         return taskService.getTask(id);
     }
 
+    @GetMapping("/deleteTask/{id}")
+    public void deleteTask(@PathVariable("id") Long id) {
+        taskService.deleteTask(id);
+    }
+
     @PostMapping("/createTask")
     public void createTask(@RequestBody Task task) {
         taskService.createTask(task);

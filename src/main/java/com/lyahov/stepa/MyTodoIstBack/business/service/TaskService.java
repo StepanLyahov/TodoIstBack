@@ -6,6 +6,9 @@ import com.lyahov.stepa.MyTodoIstBack.web.dto.enums.StatusTask;
 import java.util.List;
 
 public interface TaskService {
+
+    void deleteTask(Long id);
+
     Task getTask(Long id);
 
     void createTask(Task task);
