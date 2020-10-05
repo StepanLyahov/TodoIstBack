@@ -4,16 +4,14 @@ import com.lyahov.stepa.MyTodoIstBack.business.dao.TaskRepository;
 import com.lyahov.stepa.MyTodoIstBack.business.entity.TaskEntity;
 import com.lyahov.stepa.MyTodoIstBack.business.service.TaskService;
 import com.lyahov.stepa.MyTodoIstBack.utils.mappers.TaskMapper;
-import com.lyahov.stepa.MyTodoIstBack.web.dto.Task;
+import com.lyahov.stepa.MyTodoIstBack.web.dto.TaskDto;
 import com.lyahov.stepa.MyTodoIstBack.web.dto.enums.StatusTask;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @SneakyThrows
-    public Task getTask(Long id) {
+    public TaskDto getTask(Long id) {
         log.info("get task by " + id);
         TaskEntity task = taskRepository.findById(id).orElse(null);
         if (null == task) {
@@ -47,30 +45,30 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createTask(Task task) {
+    public void createTask(TaskDto taskDto) {
         log.info("create task");
-        if (task != null) {
-            task.setStatus(StatusTask.IN_PROGRESS);
-            TaskEntity entity = mapper.toEntity(task);
+        if (taskDto != null) {
+            taskDto.setStatus(StatusTask.IN_PROGRESS);
+            TaskEntity entity = mapper.toEntity(taskDto);
             taskRepository.save(entity);
         }
     }
 
     @Override
     @SneakyThrows
-    public void updateTask(Task task) {
+    public void updateTask(TaskDto taskDto) {
         log.info("update task");
 
-        if (task == null || task.getId() == null) {
+        if (taskDto == null || taskDto.getId() == null) {
             log.info("task is void");
             throw new Exception("Такой задачи не существует");
         }
 
-        taskRepository.save(mapper.toEntity(task));
+        taskRepository.save(mapper.toEntity(taskDto));
     }
 
     @Override
-    public List<Task> getAllTask(List<StatusTask> statuses) {
+    public List<TaskDto> getAllTask(List<StatusTask> statuses) {
         log.info("get all task");
         return taskRepository.findAll()
                 .stream().map(mapper::toDto)

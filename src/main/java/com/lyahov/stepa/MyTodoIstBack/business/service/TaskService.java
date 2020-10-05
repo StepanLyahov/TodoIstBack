@@ -1,6 +1,6 @@
 package com.lyahov.stepa.MyTodoIstBack.business.service;
 
-import com.lyahov.stepa.MyTodoIstBack.web.dto.Task;
+import com.lyahov.stepa.MyTodoIstBack.web.dto.TaskDto;
 import com.lyahov.stepa.MyTodoIstBack.web.dto.enums.StatusTask;
 
 import java.util.List;
@@ -9,11 +9,11 @@ public interface TaskService {
 
     void deleteTask(Long id);
 
-    Task getTask(Long id);
+    TaskDto getTask(Long id);
 
-    void createTask(Task task);
+    void createTask(TaskDto taskDto);
 
-    void updateTask(Task task);
+    void updateTask(TaskDto taskDto);
 
-    List<Task> getAllTask(List<StatusTask> statuses);
+    List<TaskDto> getAllTask(List<StatusTask> statuses);
 }

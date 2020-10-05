@@ -1,6 +1,5 @@
 package com.lyahov.stepa.MyTodoIstBack.business.entity;
 
-import com.lyahov.stepa.MyTodoIstBack.web.dto.Project;
 import com.lyahov.stepa.MyTodoIstBack.web.dto.enums.StatusTask;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

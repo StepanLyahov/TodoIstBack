@@ -6,7 +6,7 @@ import com.lyahov.stepa.MyTodoIstBack.business.entity.ProjectEntity;
 import com.lyahov.stepa.MyTodoIstBack.business.entity.TaskEntity;
 import com.lyahov.stepa.MyTodoIstBack.business.service.ProjectService;
 import com.lyahov.stepa.MyTodoIstBack.utils.mappers.ProjectMapper;
-import com.lyahov.stepa.MyTodoIstBack.web.dto.Project;
+import com.lyahov.stepa.MyTodoIstBack.web.dto.ProjectDto;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +26,13 @@ public class ProjectServiceImpl implements ProjectService  {
     private final ProjectMapper projectMapper;
 
     @Override
-    public void createProject(Project project) {
-        if (project == null) {
+    public void createProject(ProjectDto projectDto) {
+        if (projectDto == null) {
             log.info("project is void");
             return;
         }
-        log.info("create new project : " + project.getTitle());
-        projectRepository.save(projectMapper.toEntity(project));
+        log.info("create new project : " + projectDto.getTitle());
+        projectRepository.save(projectMapper.toEntity(projectDto));
     }
 
     @Override
@@ -42,17 +42,17 @@ public class ProjectServiceImpl implements ProjectService  {
     }
 
     @Override
-    public void updateProject(Project project) {
-        if (project == null || project.getId() == null) {
+    public void updateProject(ProjectDto projectDto) {
+        if (projectDto == null || projectDto.getId() == null) {
             log.info("project is void");
             return;
         }
-        log.info("update project: " + project.getId());
-        projectRepository.save(projectMapper.toEntity(project));
+        log.info("update project: " + projectDto.getId());
+        projectRepository.save(projectMapper.toEntity(projectDto));
     }
 
     @Override
-    public List<Project> getAllProject() {
+    public List<ProjectDto> getAllProject() {
         log.info("get all project");
         return projectRepository.findAll()
                 .stream().map(projectMapper::toDto)

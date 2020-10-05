@@ -1,18 +1,18 @@
 package com.lyahov.stepa.MyTodoIstBack.business.service;
 
-import com.lyahov.stepa.MyTodoIstBack.web.dto.Project;
+import com.lyahov.stepa.MyTodoIstBack.web.dto.ProjectDto;
 
 import java.util.List;
 
 public interface ProjectService {
 
-    void createProject(Project project);
+    void createProject(ProjectDto projectDto);
 
     void deleteProject(Long id);
 
-    void updateProject(Project project);
+    void updateProject(ProjectDto projectDto);
 
-    List<Project> getAllProject();
+    List<ProjectDto> getAllProject();
 
     void addTaskToProject(Long projectId, Long taskId);
 

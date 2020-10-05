@@ -1,7 +1,7 @@
 package com.lyahov.stepa.MyTodoIstBack.web.api.v1;
 
 import com.lyahov.stepa.MyTodoIstBack.business.service.ProjectService;
-import com.lyahov.stepa.MyTodoIstBack.web.dto.Project;
+import com.lyahov.stepa.MyTodoIstBack.web.dto.ProjectDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +17,8 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @PostMapping("/createProject")
-    public void createProject(@RequestBody Project project) {
-        projectService.createProject(project);
+    public void createProject(@RequestBody ProjectDto projectDto) {
+        projectService.createProject(projectDto);
     }
 
     @GetMapping("/deleteProject/{id}")
@@ -27,12 +27,12 @@ public class ProjectController {
     }
 
     @PostMapping("/updateProject")
-    public void updateProject(@RequestBody Project project) {
-        projectService.updateProject(project);
+    public void updateProject(@RequestBody ProjectDto projectDto) {
+        projectService.updateProject(projectDto);
     }
 
     @GetMapping("/getAllProject")
-    public List<Project> getAllProject() {
+    public List<ProjectDto> getAllProject() {
         return projectService.getAllProject();
     }
 

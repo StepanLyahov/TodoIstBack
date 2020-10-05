@@ -10,7 +10,7 @@ import javax.persistence.Enumerated;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Task {
+public class TaskDto {
     Long id;
     String title;
     String description;

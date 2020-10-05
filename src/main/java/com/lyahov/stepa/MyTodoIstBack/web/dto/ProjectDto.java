@@ -8,8 +8,8 @@ import java.util.List;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Project {
+public class ProjectDto {
     Integer id;
     String title;
-    List<Task> tasks;
+    List<TaskDto> taskDtos;
 }
