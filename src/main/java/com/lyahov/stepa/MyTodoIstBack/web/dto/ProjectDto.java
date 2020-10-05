@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProjectDto {
-    Integer id;
+    Long id;
     String title;
     List<TaskDto> taskDtos;
 }
