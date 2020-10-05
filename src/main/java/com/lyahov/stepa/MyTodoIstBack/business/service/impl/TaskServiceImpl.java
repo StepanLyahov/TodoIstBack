@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,25 +24,26 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper mapper;
 
-
     @Override
     public void deleteTask(Long id) {
         log.info("delete task by " + id);
         if (null == id) {
             log.info("task by" + id + " is not found");
-            taskRepository.deleteById(id);
+            return;
         }
+        taskRepository.deleteById(id);
     }
 
     @Override
+    @SneakyThrows
     public Task getTask(Long id) {
         log.info("get task by " + id);
-        TaskEntity entity = taskRepository.getOne(id);
-        if (null == entity) {
+        TaskEntity task = taskRepository.findById(id).orElse(null);
+        if (null == task) {
             log.info("task by" + id + " is not found");
-            return null;
+            throw new Exception("Такой задачи не существует");
         }
-        return mapper.toDto(entity);
+        return mapper.toDto(task);
     }
 
     @Override

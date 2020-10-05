@@ -12,6 +12,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,24 +59,39 @@ public class ProjectServiceImpl implements ProjectService  {
                 .collect(Collectors.toList());
     }
 
+    @SneakyThrows
+    private void checkProjectEntityIsEmpty(ProjectEntity projectEntity) {
+        if (projectEntity == null) {
+            log.info("There is no such project");
+            throw new Exception("Такого проекта не существует");
+        }
+    }
+
+    @SneakyThrows
+    private void checkTaskEntityIsEmpty(TaskEntity taskEntity) {
+        if (taskEntity == null) {
+            log.info("There is no such task");
+            throw new Exception("Такой задачи не существует");
+        }
+    }
+
     @Override
     @SneakyThrows
     public void addTaskToProject(Long projectId, Long taskId) {
         log.info("add task: " + taskId + "to project: " + projectId);
 
-        ProjectEntity projectEntity = projectRepository.getOne(projectId);
-        if (projectEntity == null) {
-            log.info("There is no such project");
-            throw new Exception("Такого проекта не существует");
-        }
+        ProjectEntity projectEntity = projectRepository.findById(projectId).orElse(null);
+        checkProjectEntityIsEmpty(projectEntity);
 
         TaskEntity taskEntity = taskRepository.getOne(taskId);
-        if (taskEntity == null) {
-            log.info("There is no such task");
-            throw new Exception("Такой задачи не существует");
-        }
+        checkTaskEntityIsEmpty(taskEntity);
 
-        projectEntity.getTasks().add(taskEntity);
+        List<TaskEntity> res = projectEntity.getTasks();
+        if (res == null || res.isEmpty())
+            res = new ArrayList<>();
+        res.add(taskEntity);
+
+        projectEntity.setTasks(res);
 
         projectRepository.save(projectEntity);
     }
@@ -85,24 +101,16 @@ public class ProjectServiceImpl implements ProjectService  {
     public void delTaskToProject(Long projectId, Long taskId) {
         log.info("add task: " + taskId + "to project: " + projectId);
 
-        ProjectEntity projectEntity = projectRepository.getOne(projectId);
-        if (projectEntity == null) {
-            log.info("There is no such project");
-            throw new Exception("Такого проекта не существует");
-        }
+        ProjectEntity projectEntity = projectRepository.findById(projectId).orElse(null);
+        checkProjectEntityIsEmpty(projectEntity);
 
         TaskEntity taskEntity = taskRepository.getOne(taskId);
-        if (taskEntity == null) {
-            log.info("There is no such task");
-            throw new Exception("Такой задачи не существует");
-        }
+        checkTaskEntityIsEmpty(taskEntity);
 
         List<TaskEntity> list = projectEntity.getTasks();
         list = list.stream().filter(task -> !task.equals(taskEntity)).collect(Collectors.toList());
-
         projectEntity.setTasks(list);
 
         projectRepository.save(projectEntity);
-
     }
 }

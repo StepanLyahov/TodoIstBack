@@ -29,7 +29,7 @@ public class TaskEntity {
     @Enumerated(EnumType.STRING)
     StatusTask status;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     ProjectEntity projectId;
 }

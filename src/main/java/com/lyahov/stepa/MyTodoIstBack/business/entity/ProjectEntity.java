@@ -21,6 +21,6 @@ public class ProjectEntity {
     Integer id;
     String title;
 
-    @OneToMany(mappedBy = "projectId", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "projectId", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     List<TaskEntity> tasks;
 }
