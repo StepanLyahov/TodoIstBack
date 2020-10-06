@@ -12,7 +12,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,39 +77,35 @@ public class ProjectServiceImpl implements ProjectService  {
     @Override
     @SneakyThrows
     public void addTaskToProject(Long projectId, Long taskId) {
-        log.info("add task: " + taskId + "to project: " + projectId);
+        log.info("add task: " + taskId + " to project: " + projectId);
 
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElse(null);
         checkProjectEntityIsEmpty(projectEntity);
 
-        TaskEntity taskEntity = taskRepository.getOne(taskId);
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElse(null);
         checkTaskEntityIsEmpty(taskEntity);
 
-        List<TaskEntity> res = projectEntity.getTasks();
-        if (res == null || res.isEmpty())
-            res = new ArrayList<>();
-        res.add(taskEntity);
+        taskEntity.setProjectId(projectEntity);
 
-        projectEntity.setTasks(res);
+        taskRepository.save(taskEntity);
 
-        projectRepository.save(projectEntity);
     }
 
     @Override
     @SneakyThrows
     public void delTaskToProject(Long projectId, Long taskId) {
-        log.info("add task: " + taskId + "to project: " + projectId);
+        log.info("del task: " + taskId + " to project: " + projectId);
 
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElse(null);
         checkProjectEntityIsEmpty(projectEntity);
 
-        TaskEntity taskEntity = taskRepository.getOne(taskId);
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElse(null);
         checkTaskEntityIsEmpty(taskEntity);
 
-        List<TaskEntity> list = projectEntity.getTasks();
-        list = list.stream().filter(task -> !task.equals(taskEntity)).collect(Collectors.toList());
-        projectEntity.setTasks(list);
+        if (projectId == taskEntity.getProjectId().getId()) {
+            taskEntity.setProjectId(null);
+        }
 
-        projectRepository.save(projectEntity);
+        taskRepository.saveAndFlush(taskEntity);
     }
 }
