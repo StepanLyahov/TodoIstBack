@@ -1,10 +1,4 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://${DB_URL:localhost:5432/todoistdb}
-    username: ${DB_USERNAME:stepan}
-    password: ${DB_PASSWORD:postgres}
-    driverClassName: org.postgresql.Driver
-
   jpa:
     hibernate:
       ddl-auto: create
