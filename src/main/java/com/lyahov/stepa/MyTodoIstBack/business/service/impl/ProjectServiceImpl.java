@@ -102,7 +102,7 @@ public class ProjectServiceImpl implements ProjectService  {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElse(null);
         checkTaskEntityIsEmpty(taskEntity);
 
-        if (projectId == taskEntity.getProjectId().getId()) {
+        if (projectId.equals(taskEntity.getProjectId().getId())) {
             taskEntity.setProjectId(null);
         }
 

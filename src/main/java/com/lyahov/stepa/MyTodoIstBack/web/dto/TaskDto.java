@@ -18,10 +18,6 @@ public class TaskDto {
     String description;
 
     @Enumerated(EnumType.STRING)
-    Priority priority;
-
-    @Enumerated(EnumType.STRING)
     StatusTask status;
 
-    LocalDate term;
 }
