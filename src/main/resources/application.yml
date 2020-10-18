@@ -5,8 +5,13 @@ spring:
     password: ${DB_PASSWORD:postgres}
     driverClassName: org.postgresql.Driver
 
-  jpa:
-    hibernate:
-      ddl-auto: create
+jwt:
+  header: Authorization
+  secret: proselyte
+  expiration: 604800
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
 server:
   port: ${SERVER_PORT:8080}
