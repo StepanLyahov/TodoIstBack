@@ -17,11 +17,6 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    @GetMapping("/getTask/{id}")
-    public TaskDto getTask(@PathVariable("id") Long id) {
-        return taskService.getTask(id);
-    }
-
     @GetMapping("/deleteTask/{id}")
     public void deleteTask(@PathVariable("id") Long id) {
         taskService.deleteTask(id);
@@ -38,7 +33,7 @@ public class TaskController {
     }
 
     @GetMapping("/getAllTask")
-    public List<TaskDto> getAllTask(@RequestParam List<StatusTask> statuses) {
-        return taskService.getAllTask(statuses);
+    public List<TaskDto> getAllTask() {
+        return taskService.getAllTask();
     }
 }
