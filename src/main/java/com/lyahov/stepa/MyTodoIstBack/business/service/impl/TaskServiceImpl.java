@@ -1,6 +1,8 @@
 package com.lyahov.stepa.MyTodoIstBack.business.service.impl;
 
+import com.lyahov.stepa.MyTodoIstBack.business.dao.ProjectRepository;
 import com.lyahov.stepa.MyTodoIstBack.business.dao.TaskRepository;
+import com.lyahov.stepa.MyTodoIstBack.business.entity.ProjectEntity;
 import com.lyahov.stepa.MyTodoIstBack.business.entity.TaskEntity;
 import com.lyahov.stepa.MyTodoIstBack.business.service.TaskService;
 import com.lyahov.stepa.MyTodoIstBack.utils.mappers.TaskMapper;
@@ -21,6 +23,7 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskMapper mapper;
+    private final ProjectRepository projectRepository;
 
     @Override
     public void deleteTask(Long id) {
@@ -34,24 +37,23 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @SneakyThrows
-    public TaskDto getTask(Long id) {
-        log.info("get task by " + id);
-        TaskEntity task = taskRepository.findById(id).orElse(null);
-        if (null == task) {
-            log.info("task by" + id + " is not found");
-            throw new Exception("Такой задачи не существует");
-        }
-        return mapper.toDto(task);
-    }
-
-    @Override
     public void createTask(TaskDto taskDto) {
         log.info("create task");
-        if (taskDto != null) {
-            taskDto.setStatus(StatusTask.IN_PROGRESS);
-            TaskEntity entity = mapper.toEntity(taskDto);
-            taskRepository.save(entity);
+        if (taskDto == null) {
+            log.info("task is void");
+            return;
         }
+        ProjectEntity projectEntity = projectRepository.findById(taskDto.getProjectId()).orElse(null);
+
+        if (projectEntity == null) {
+            log.info("project not found. id: " + taskDto.getProjectId());
+            throw new Exception("Проект не найден");
+        }
+
+        taskDto.setStatus(StatusTask.IN_PROGRESS);
+        TaskEntity entity = mapper.toEntity(taskDto);
+        entity.setProjectId(projectEntity);
+        taskRepository.save(entity);
     }
 
     @Override
@@ -64,14 +66,26 @@ public class TaskServiceImpl implements TaskService {
             throw new Exception("Такой задачи не существует");
         }
 
-        taskRepository.save(mapper.toEntity(taskDto));
+        ProjectEntity projectEntity = projectRepository.findById(taskDto.getProjectId()).orElse(null);
+
+        if (projectEntity == null) {
+            log.info("project not found. id: " + taskDto.getProjectId());
+            throw new Exception("Проект не найден");
+        }
+        TaskEntity taskEntity = mapper.toEntity(taskDto);
+        taskEntity.setProjectId(projectEntity);
+        taskRepository.save(taskEntity);
     }
 
     @Override
-    public List<TaskDto> getAllTask(List<StatusTask> statuses) {
+    public List<TaskDto> getAllTask(Long projectId) {
         log.info("get all task");
         return taskRepository.findAll()
-                .stream().map(mapper::toDto)
+                .stream().map(mapper::toDto).filter(t -> {
+                    if (projectId != null)
+                        return t.getProjectId().equals(projectId);
+                    return true;
+                })
                 .collect(Collectors.toList());
     }
 }

@@ -9,15 +9,14 @@ import org.mapstruct.Mapping;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper
 public interface ProjectMapper {
 
-    @Mapping(target = "taskDtos", expression = "java(setTasks(entity.getTasks()))")
+    @Mapping(target = "taskDtos", expression = "java(setTasks(entity.getTasks(), entity))")
     ProjectDto toDto(ProjectEntity entity);
 
-    default List<TaskDto> setTasks(List<TaskEntity> res) {
+    default List<TaskDto> setTasks(List<TaskEntity> res, ProjectEntity projectEntity) {
 
         List<TaskDto> resList = new ArrayList<>();
         for (TaskEntity entity : res) {
@@ -26,6 +25,7 @@ public interface ProjectMapper {
             taskDto.setTitle(entity.getTitle());
             taskDto.setStatus(entity.getStatus());
             taskDto.setDescription(entity.getDescription());
+            taskDto.setProjectId(projectEntity.getId());
 
             resList.add(taskDto);
         }

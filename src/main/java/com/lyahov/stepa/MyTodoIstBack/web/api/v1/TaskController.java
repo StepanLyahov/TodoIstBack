@@ -2,7 +2,6 @@ package com.lyahov.stepa.MyTodoIstBack.web.api.v1;
 
 import com.lyahov.stepa.MyTodoIstBack.business.service.TaskService;
 import com.lyahov.stepa.MyTodoIstBack.web.dto.TaskDto;
-import com.lyahov.stepa.MyTodoIstBack.web.dto.enums.StatusTask;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +15,6 @@ import static com.lyahov.stepa.MyTodoIstBack.web.ApiConstantUtil.TASK;
 public class TaskController {
 
     private final TaskService taskService;
-
-    @GetMapping("/getTask/{id}")
-    public TaskDto getTask(@PathVariable("id") Long id) {
-        return taskService.getTask(id);
-    }
 
     @GetMapping("/deleteTask/{id}")
     public void deleteTask(@PathVariable("id") Long id) {
@@ -38,7 +32,7 @@ public class TaskController {
     }
 
     @GetMapping("/getAllTask")
-    public List<TaskDto> getAllTask(@RequestParam List<StatusTask> statuses) {
-        return taskService.getAllTask(statuses);
+    public List<TaskDto> getAllTask(@RequestParam(required = false) Long projectId) {
+        return taskService.getAllTask(projectId);
     }
 }
