@@ -31,7 +31,7 @@
 Клонируем git репозиторий в папку
 
 ```
-    $ git clone https://github.com/StepanLyahov/TodoIstBack.git -b dev_with_h2
+    $ git clone https://github.com/StepanLyahov/TodoIstBack.git -b {нужная ветка}
 ```
 Заходим в папку проекта
 
