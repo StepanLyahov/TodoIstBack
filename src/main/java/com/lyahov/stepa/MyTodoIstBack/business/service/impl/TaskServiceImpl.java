@@ -66,14 +66,26 @@ public class TaskServiceImpl implements TaskService {
             throw new Exception("Такой задачи не существует");
         }
 
-        taskRepository.save(mapper.toEntity(taskDto));
+        ProjectEntity projectEntity = projectRepository.findById(taskDto.getProjectId()).orElse(null);
+
+        if (projectEntity == null) {
+            log.info("project not found. id: " + taskDto.getProjectId());
+            throw new Exception("Проект не найден");
+        }
+        TaskEntity taskEntity = mapper.toEntity(taskDto);
+        taskEntity.setProjectId(projectEntity);
+        taskRepository.save(taskEntity);
     }
 
     @Override
-    public List<TaskDto> getAllTask() {
+    public List<TaskDto> getAllTask(Long projectId) {
         log.info("get all task");
         return taskRepository.findAll()
-                .stream().map(mapper::toDto)
+                .stream().map(mapper::toDto).filter(t -> {
+                    if (projectId != null)
+                        return t.getProjectId().equals(projectId);
+                    return true;
+                })
                 .collect(Collectors.toList());
     }
 }

@@ -2,13 +2,11 @@ package com.lyahov.stepa.MyTodoIstBack.business.service.impl;
 
 import com.lyahov.stepa.MyTodoIstBack.business.dao.ProjectRepository;
 import com.lyahov.stepa.MyTodoIstBack.business.dao.TaskRepository;
-import com.lyahov.stepa.MyTodoIstBack.business.entity.ProjectEntity;
 import com.lyahov.stepa.MyTodoIstBack.business.entity.TaskEntity;
 import com.lyahov.stepa.MyTodoIstBack.business.service.ProjectService;
 import com.lyahov.stepa.MyTodoIstBack.utils.mappers.ProjectMapper;
 import com.lyahov.stepa.MyTodoIstBack.web.dto.ProjectDto;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +19,7 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService  {
 
     private final ProjectRepository projectRepository;
+    private final TaskRepository taskRepository;
     private final ProjectMapper projectMapper;
 
     @Override
@@ -36,6 +35,13 @@ public class ProjectServiceImpl implements ProjectService  {
     @Override
     public void deleteProject(Long id) {
         log.info("del project by id : " + id);
+
+        List<TaskEntity> tasks = taskRepository.findAll();
+        tasks.forEach(t -> {
+            if (t.getProjectId().getId().equals(id))
+                taskRepository.deleteById(t.getId());
+        });
+
         projectRepository.deleteById(id);
     }
 

@@ -13,5 +13,5 @@ public interface TaskService {
 
     void updateTask(TaskDto taskDto);
 
-    List<TaskDto> getAllTask();
+    List<TaskDto> getAllTask(Long projectId);
 }

@@ -2,7 +2,6 @@ package com.lyahov.stepa.MyTodoIstBack.web.api.v1;
 
 import com.lyahov.stepa.MyTodoIstBack.business.service.TaskService;
 import com.lyahov.stepa.MyTodoIstBack.web.dto.TaskDto;
-import com.lyahov.stepa.MyTodoIstBack.web.dto.enums.StatusTask;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +32,7 @@ public class TaskController {
     }
 
     @GetMapping("/getAllTask")
-    public List<TaskDto> getAllTask() {
-        return taskService.getAllTask();
+    public List<TaskDto> getAllTask(@RequestParam(required = false) Long projectId) {
+        return taskService.getAllTask(projectId);
     }
 }
