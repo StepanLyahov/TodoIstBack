@@ -29,6 +29,6 @@ public class TaskEntity {
     StatusTask status;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "project_id", referencedColumnName = "id")
+    @JoinColumn(name = "projectId", referencedColumnName = "id")
     ProjectEntity projectId;
 }

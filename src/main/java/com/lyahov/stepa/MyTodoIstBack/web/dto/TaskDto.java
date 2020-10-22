@@ -20,4 +20,5 @@ public class TaskDto {
     @Enumerated(EnumType.STRING)
     StatusTask status;
 
+    Long projectId;
 }
