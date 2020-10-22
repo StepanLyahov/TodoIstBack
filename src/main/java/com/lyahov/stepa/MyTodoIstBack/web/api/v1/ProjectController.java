@@ -35,17 +35,4 @@ public class ProjectController {
     public List<ProjectDto> getAllProject() {
         return projectService.getAllProject();
     }
-
-    @PostMapping("/{projectId}/addTask/{taskId}")
-    public void addTaskToProject(@PathVariable("projectId") Long projectId,
-                                 @PathVariable("taskId") Long taskId) {
-        projectService.addTaskToProject(projectId, taskId);
-    }
-
-    @PostMapping("/{projectId}/delTask/{taskId}")
-    public void delTaskToProject(@PathVariable("projectId") Long projectId,
-                                 @PathVariable("taskId") Long taskId) {
-        projectService.delTaskToProject(projectId, taskId);
-    }
-
 }
