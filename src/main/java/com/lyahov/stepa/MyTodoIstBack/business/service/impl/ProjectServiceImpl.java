@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService  {
 
     private final ProjectRepository projectRepository;
-    private final TaskRepository taskRepository;
     private final ProjectMapper projectMapper;
 
     @Override
@@ -56,56 +55,5 @@ public class ProjectServiceImpl implements ProjectService  {
         return projectRepository.findAll()
                 .stream().map(projectMapper::toDto)
                 .collect(Collectors.toList());
-    }
-
-    @SneakyThrows
-    private void checkProjectEntityIsEmpty(ProjectEntity projectEntity) {
-        if (projectEntity == null) {
-            log.info("There is no such project");
-            throw new Exception("Такого проекта не существует");
-        }
-    }
-
-    @SneakyThrows
-    private void checkTaskEntityIsEmpty(TaskEntity taskEntity) {
-        if (taskEntity == null) {
-            log.info("There is no such task");
-            throw new Exception("Такой задачи не существует");
-        }
-    }
-
-    @Override
-    @SneakyThrows
-    public void addTaskToProject(Long projectId, Long taskId) {
-        log.info("add task: " + taskId + " to project: " + projectId);
-
-        ProjectEntity projectEntity = projectRepository.findById(projectId).orElse(null);
-        checkProjectEntityIsEmpty(projectEntity);
-
-        TaskEntity taskEntity = taskRepository.findById(taskId).orElse(null);
-        checkTaskEntityIsEmpty(taskEntity);
-
-        taskEntity.setProjectId(projectEntity);
-
-        taskRepository.save(taskEntity);
-
-    }
-
-    @Override
-    @SneakyThrows
-    public void delTaskToProject(Long projectId, Long taskId) {
-        log.info("del task: " + taskId + " to project: " + projectId);
-
-        ProjectEntity projectEntity = projectRepository.findById(projectId).orElse(null);
-        checkProjectEntityIsEmpty(projectEntity);
-
-        TaskEntity taskEntity = taskRepository.findById(taskId).orElse(null);
-        checkTaskEntityIsEmpty(taskEntity);
-
-        if (projectId.equals(taskEntity.getProjectId().getId())) {
-            taskEntity.setProjectId(null);
-        }
-
-        taskRepository.saveAndFlush(taskEntity);
     }
 }

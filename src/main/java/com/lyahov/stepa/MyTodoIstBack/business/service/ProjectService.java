@@ -14,7 +14,4 @@ public interface ProjectService {
 
     List<ProjectDto> getAllProject();
 
-    void addTaskToProject(Long projectId, Long taskId);
-
-    void delTaskToProject(Long projectId, Long taskId);
 }
