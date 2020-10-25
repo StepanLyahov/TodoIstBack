@@ -4,18 +4,18 @@
 
 ## Настройка окружения
 
-###Установить Java8
+###Установить Java11
 
 Для MacOS
 ```
-    $ brew cask install java8
+    $ brew cask install java11
 ```
 
 Для Linux
 
 ```
     $ sudo apt update
-    $ sudo apt install openjdk-8-jdk
+    $ sudo apt install openjdk-11-jdk
 ```
 
 ###Для сборки и запуска приложение необходимо установить Maven
