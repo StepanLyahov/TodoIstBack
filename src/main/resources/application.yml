@@ -5,9 +5,6 @@ spring:
     password: ${DB_PASSWORD:postgres}
     driverClassName: org.postgresql.Driver
 
-  main:
-    allow-bean-definition-overriding: true
-
 #  jpa:
 #    hibernate:
 #      ddl-auto: create
